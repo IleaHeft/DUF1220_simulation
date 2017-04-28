@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#BSUB -J simulation[1-30]
+#BSUB -J simulation[1-60]
 #BSUB -e logs/simulate_replicates_%J.log
 #BSUB -o logs/simulate_replicates_%J.out
 #BSUB -R "select[mem>4] rusage[mem=4] span[hosts=1]"
@@ -13,7 +13,7 @@ GENOME=$HOME/genomes/bowtie2.2.5_indicies/hg38/hg38.fa
 copies=2
 READ_LENGTH=()
 REPLICATE=()
-for i in 36 100 150
+for i in 36 50 100 150 300 600
 do
 	for j in {1..10}
 	do
@@ -31,6 +31,16 @@ done
 read_length=${READ_LENGTH[$(($LSB_JOBINDEX - 1))]}
 replicate=${REPLICATE[$(($LSB_JOBINDEX - 1))]}
 
+# Generate directores if necessary
+
+if [ ! -d "logs" ]; then
+  mkdir -p logs
+fi
+
+if [ ! -d "$fastq_folder" ]; then
+  mkdir -p $fastq_folder
+fi
+
 code/simulate_reads.sh -b $base_coverage -c $copies -l $read_length -r $replicate $fastq_folder $bed_ref
 
 prefix=$fastq_folder/template_${read_length}bp_${copies}x_$replicate
@@ -42,7 +52,10 @@ temp=$prefix
 for pair in 1 2
 do
 	prefix=${temp}_$pair
+    echo "getting sequence for simulated read positions"
 	bedtools getfasta -name -s -fi $GENOME -bed $prefix.bed -fo $prefix.fa
+
+    echo "converting fasta file to fastq"
 	code/fasta2fastq.pl -f $prefix.fa -e data/qualities_R${pair}_${read_length}bp.txt -o $prefix.fastq
 	rm $prefix.bed
 	rm $prefix.fa
