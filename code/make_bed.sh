@@ -28,7 +28,7 @@ output=$2
 
 if [ "$pairing" == "paired" ]
 then
-    samtools sort -n -@ 5 -m 5G $bam ${output}_sorted
+    samtools sort -n -@ 5 -m 5G -o ${output}_sorted.bam $bam
     bedtools bamtobed -split -bedpe -i ${output}_sorted.bam > $output.bed
     code/parse_bed.pl $output.bed
 elif [ "$pairing" == "single" ]
@@ -43,9 +43,9 @@ bedtools intersect -wao -sorted -a $reference_bed -b ${output}_sorted.bed > ${ou
 if [[ -n $multiread ]]
 then
     code/multi_read_correction.pl ${output}_temp.bed > ${output}_corrected.bed
-    bedtools merge -scores sum -i ${output}_corrected.bed > ${output}_coverage.bed
+    bedtools merge -c 5 -o sum -i ${output}_corrected.bed > ${output}_coverage.bed
 else
-    awk 'OFS="\t" {print $4,$2,$3,$1,$13}' ${output}_temp.bed | bedtools merge -scores sum -i - > ${output}_coverage.bed
+    awk 'OFS="\t" {print $4,$2,$3,$1,$13}' ${output}_temp.bed | bedtools merge -c 5 -o sum -i - > ${output}_coverage.bed
 fi
 awk 'OFS="\t" { print $1, $4 / ($3 - $2 + 1)}' ${output}_coverage.bed > ${output}_read_depth.bed
 #if [ -f $output.bed ]
