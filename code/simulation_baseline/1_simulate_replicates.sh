@@ -6,6 +6,7 @@
 #BSUB -q normal
 #BSUB -P Sikela
 
+lengths_to_sim="36 50 100 150 300 600"
 base_coverage=15
 fastq_folder=fastq/replicates
 bed_ref=reference/hg38_all_regions_10Mb_merged.bed
@@ -13,7 +14,7 @@ GENOME=$HOME/genomes/bowtie2.2.5_indicies/hg38/hg38.fa
 copies=2
 READ_LENGTH=()
 REPLICATE=()
-for i in 36 50 100 150 300 600
+for i in $lengths_to_sim
 do
 	for j in {1..10}
 	do
