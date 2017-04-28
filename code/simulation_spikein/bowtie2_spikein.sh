@@ -16,6 +16,12 @@ genome=~astlingd/genomes/bowtie2.2.5_indicies/hg38/hg38
 fastq_folder=fastq/template
 results=alignments/spikein/normal
 
+# Generates directory if necessary
+if [ ! -d "$results" ]; then
+   mkdir -p $fastq_folder
+ fi
+
+
 source code/config_domains.sh
 domain=${DOMAINS[$(($LSB_JOBINDEX - 1))]}
 
