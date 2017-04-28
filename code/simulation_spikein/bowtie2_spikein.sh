@@ -12,7 +12,7 @@
 # catch unset variables, non-zero exits in pipes and calls, enable x-trace.
 set -o nounset -o pipefail -o errexit -x
 
-genome=~astlingd/genomes/bowtie2.2.5_indicies/hg38/hg38
+genome=$HOME/genomes/bowtie2.2.5_indicies/hg38/hg38
 fastq_folder=fastq/template
 results=alignments/spikein/normal
 
