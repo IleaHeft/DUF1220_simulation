@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#BSUB -J align[1-40]
+#BSUB -J align[1]
 #BSUB -e logs/bowtie2_%J.log
 #BSUB -o logs/bowtie2_%J.out
 #BSUB -R "select[mem>5] rusage[mem=5] span[hosts=1]"
@@ -10,9 +10,14 @@
 # catch unset variables, non-zero exits in pipes and calls, enable x-trace.
 set -o nounset -o pipefail -o errexit -x
 
-genome=~astlingd/genomes/bowtie2.2.5_indicies/hg38/hg38
+genome=$HOME/genomes/bowtie2.2.5_indicies/hg38/hg38
 fastq_folder=fastq/replicates
 results_folder=alignments/replicates/normal
+
+
+if [ ! -d "$results_folder" ]; then
+    mkdir -p $results_folder
+fi
 
 SAMPLES=( $fastq_folder/*_1.fastq.gz )
 sample=${SAMPLES[$(($LSB_JOBINDEX - 1))]}
