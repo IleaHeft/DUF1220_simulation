@@ -2,7 +2,7 @@
 
 base_coverage=15
 copies=2
-read_length=100
+read_length=
 replicate=
 duf_ref=reference/DUF1220_canonical_domains_hg38_v2.2.bed
 
