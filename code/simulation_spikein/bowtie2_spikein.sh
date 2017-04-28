@@ -18,7 +18,7 @@ results=alignments/spikein/normal
 
 # Generates directory if necessary
 if [ ! -d "$results" ]; then
-   mkdir -p $fastq_folder
+   mkdir -p $results
  fi
 
 
