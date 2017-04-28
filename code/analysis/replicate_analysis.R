@@ -12,7 +12,7 @@ haploid.coverage <- diploid.coverage / 2
 #####################################################################
 # Load Data
 #####################################################################
-source("code/load_data.R")
+source("code/analysis/load_data.R")
 
 # let's ignore the 36bp reads for now and consider those reads
 # that have been trimmed down from 100bp to 36
@@ -36,7 +36,7 @@ X <- X %>%
 #####################################################################
 # Normalize Data
 #####################################################################
-source("code/normalize.R")
+source("code/analysis/normalize.R")
 
 
 #####################################################################
