@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#BSUB -J simulation[1-60]
+#BSUB -J simulation[1-20]
 #BSUB -e logs/simulate_read_lengths_%J.log
 #BSUB -o logs/simulate_read_lengths_%J.out
 #BSUB -R "select[mem>20] rusage[mem=20] span[hosts=1]"
@@ -9,6 +9,7 @@
 # catch unset variables, non-zero exits in pipes and calls, enable x-trace.
 set -o nounset -o pipefail -o errexit -x
 
+lengths_to_sim="100 150"
 base_coverage=15
 fastq_folder=fastq/template
 bed_ref=reference/hg38_all_regions_10Mb_merged.bed
@@ -16,14 +17,14 @@ GENOME=$HOME/genomes/bowtie2.2.5_indicies/hg38/hg38.fa
 
 READ_LENGTH=()
 COVERAGE=()
-for i in 36 50 100 150 300 600
+for i in $lengths_to_sim
 do
 	for j in {1..10}
 	do
 		READ_LENGTH+=($i)
 	done
 done
-for i in 36 50 100 150 300 600
+for i in $lengths_to_sim
 do
 	for j in {1..10}
 	do
@@ -33,6 +34,16 @@ done
 
 read_length=${READ_LENGTH[$(($LSB_JOBINDEX - 1))]}
 copies=${COVERAGE[$(($LSB_JOBINDEX - 1))]}
+
+# Generate directory if necessary
+if [ ! -d "logs" ]; then
+    mkdir -p logs
+fi
+
+if [ ! -d "$fastq_folder" ]; then
+    mkdir -p $fastq_folder
+fi
+
 
 code/simulate_reads.sh -b $base_coverage -c $copies -l $read_length $fastq_folder $bed_ref
 
