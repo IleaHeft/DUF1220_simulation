@@ -3,7 +3,7 @@ options(stringsAsFactors = FALSE)
 library(tidyr)
 library(dplyr)
 
-data.folder <- "results/replicates/mrsfast"
+data.folder <- "results/replicates/normal"
 
 diploid.coverage <- 30
 haploid.coverage <- diploid.coverage / 2
