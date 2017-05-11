@@ -10,6 +10,7 @@
 set -o nounset -o pipefail -o errexit -x
 
 lengths_to_sim="100 150"
+duf_reference=reference/DUF1220_full_domains_hg38_v2.2.bed 
 base_coverage=15
 fastq_folder=fastq/template
 bed_ref=reference/hg38_all_regions_10Mb_merged.bed
@@ -52,7 +53,7 @@ prefix=$fastq_folder/template_${read_length}bp_${copies}x
 cut -f 4-9 ${prefix}_short.bed > ${prefix}_1.bed
 cut -f 10-15 ${prefix}_short.bed > ${prefix}_2.bed
 
-code/simulation_spikein/split_NBPF_from_template.pl -i reference/DUF1220_canonical_domains_hg38_v2.2.bed -t $fastq_folder/template_${read_length}bp_${copies}x  -o $fastq_folder
+code/simulation_spikein/split_NBPF_from_template.pl -i $duf_reference -t $fastq_folder/template_${read_length}bp_${copies}x  -o $fastq_folder
 
 
 for bed in $fastq_folder/*/*_${read_length}bp_${copies}x_1.bed
