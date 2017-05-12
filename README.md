@@ -28,7 +28,7 @@ There are two types of simulations:
   b. Run the code to align the FASTQ files to the reference genome: ```bsub < code/simulation_baseline/bowtie2_replicates.sh```  
  
 4. Generate the read depth data  
-  a. Ensure the reference BED file being used is the desired file
+  a. Ensure the reference BED file being used is the desired file by checking the reference_bed variable in _code/simulation_baseline/make_bed_replicates.sh_.    
   b. Run the code: ```bsub < code/simulation_baseline/make_bed_replicates.sh```  
 
 5. Analyze the results
@@ -46,7 +46,7 @@ There are two types of simulations:
   b. Run the code to align the FASTQ files to the reference genome: ```bsub < code/simulation_spikein/bowtie2_spikein.sh```    
 3. Generate the read depth data  
   a. Set the number of jobs to the total number of domains for which FASTQ data was generated  
-  b. Ensure the reference BED file being used is the desired file  
+  b. Ensure the reference BED file being used is the desired file by checking the reference_bed variable in _code/simulation_baseline/make_bed_replicates.sh_.   
   c. Run the code: ```bsub < code/simulation_spikein/make_bed_spikein.sh```  
 4. Analyze the results  
   a. Run the code: ```Rscript < code/analysis/spikein_analysis.R```  
