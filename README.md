@@ -19,7 +19,7 @@ There are two types of simulations:
 # Running baseline simulations
 1. Simulate reads   
   a. specify the desired read lengths and replictes in *code/simulation_baseline/1_simulate_replicates.sh*.  
-  b. ensure the desired duf reference is set: both within the *1_simulate_replicates.sh* code and within *code/simulate_reads/sh*  
+  b. ensure the desired duf reference is set: both within the *1_simulate_replicates.sh* code and within *code/simulate_reads.sh*  
   c. Adjust the number of jobs to reflect the number of different read lengths multipled by the number of replicates (e.g. 2 different read lengths at 10 replicates each would be 20 jobs).  
   d. Run the code to generate the FASTQ files: ```bsub < code/simulation_baseline/1_simulate_replicates.sh```     
 
